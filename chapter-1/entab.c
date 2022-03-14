@@ -6,7 +6,7 @@
 int getLine(char line[], int maxLength);
 
 /*
-  Exercise 1-21
+                          Exercise 1-21
   
   This program replaces strings of blanks by the minimum number of tabs
   and blanks to achieve the same spacing. We will use the same tab stops
@@ -32,24 +32,30 @@ int main()
 // minimum amount of tabs and blanks to achieve same spacing
 int getLine(char line[], int maxLength) 
 {
-    int chars, ch, spaces, i;
+    int chars;	// total chars read from user input
+    int ch;	// char that we read
+    int spaces; // total spaces that we read
+    int i;	// line array index
+    
     i = chars = spaces = 0;
-    //  123456789123456789123456789
-    //  asdask    nkl   asd 
+
     while(i < maxLength - 1 && (ch = getchar()) != EOF && ch != '\n') {
+	// read all spaces 
 	while(ch == ' ') {
 	    spaces++;
 	    ch = getchar();
 	}
 	
-
+     
 	while(spaces > 0) {
+	    // we place tab, if we have enough spaces
 	    if (spaces >= (TAB_STOP - (chars % TAB_STOP))) {
 		line[i] = '\t';
 		i++;
 		spaces -= TAB_STOP - (chars % TAB_STOP);
 		chars += TAB_STOP - (chars % TAB_STOP);
 	    }
+	    // or we just place spaces instead of tab
 	    else {
 		for (int j = 0; j < spaces; j++) {
 		    line[i] = ' ';
@@ -61,13 +67,15 @@ int getLine(char line[], int maxLength)
 	    }
 	}
 	line[i] = ch;
-	i++;	    
+	i++;
 	if (ch == '\t')
+	    // add amount of spaces of this tab to chars
 	    chars += TAB_STOP - (chars % TAB_STOP);
 	else
 	    chars++;
 	     
     }
+    // because cycle ends on '\n' we add it afterwards
     if (ch == '\n') {
 	line[i] = ch;
 	i++;
