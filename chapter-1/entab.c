@@ -20,9 +20,6 @@ int main()
     int  len;
 
     while((len = getLine(line, MAX_LENGTH)) > 0) {
-	for(int i = 1; i <= 9; i++)
-	    printf("%1d", i);
-        putchar('\n');
 	printf("%s", line);	
     }
 	
@@ -37,38 +34,39 @@ int getLine(char line[], int maxLength)
 {
     int chars, ch, spaces, i;
     i = chars = spaces = 0;
-
+    //  123456789123456789123456789
+    //  asdask    nkl   asd 
     while(i < maxLength - 1 && (ch = getchar()) != EOF && ch != '\n') {
-	chars++;
-	if (ch == ' ') {
-	    // i should check current char amount to check when next tab stop
-	    // if I have enough spaces to fill it with tab - I do it
-	    if (spaces == (TAB_STOP - (chars % TAB_STOP))) {
-		line[i] = '\t';
-		i++;
-		spaces = 0;	    
-	    }
-	    else
-		spaces++;
-
-	    continue;
+	while(ch == ' ') {
+	    spaces++;
+	    ch = getchar();
 	}
-	else if (spaces > 0) {
-   	    if (spaces == (TAB_STOP - (chars % TAB_STOP))) {
+	
+
+	while(spaces > 0) {
+	    if (spaces >= (TAB_STOP - (chars % TAB_STOP))) {
 		line[i] = '\t';
 		i++;
+		spaces -= TAB_STOP - (chars % TAB_STOP);
+		chars += TAB_STOP - (chars % TAB_STOP);
 	    }
 	    else {
 		for (int j = 0; j < spaces; j++) {
 		    line[i] = ' ';
 		    i++;
+		   		    
 		}
-		
+		chars += spaces;
+		spaces = 0;
 	    }
-	    spaces = 0;
 	}
 	line[i] = ch;
 	i++;	    
+	if (ch == '\t')
+	    chars += TAB_STOP - (chars % TAB_STOP);
+	else
+	    chars++;
+	     
     }
     if (ch == '\n') {
 	line[i] = ch;
