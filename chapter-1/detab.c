@@ -1,19 +1,14 @@
 #include <stdio.h>
+
 #define MAX_LENGTH 100
 #define TAB_STOP 4
 
 int getLine(char line[], int maxLength);
-int detab(char line[], int maxLength);
-
 /*
- * How to replace each tab? 
-    - After reading the line 
-       I should shift some chars to enter 4 chars instead \t :)
-    - in the getLine function
-       My function is not clear(because it does 2 things at the same time)
-    - 
- * 
- * 
+ *                         Exercise 1-20 
+ *   Program that replaces tabs in the input with the proper
+     number of blanks to space to the next tab stop. There is
+     a fixed set of tab stops, every N columns(TAB_STOP in program)
 */
 
 int main()
@@ -35,7 +30,7 @@ int getLine(char line[], int maxLength)
     
     while(i < maxLength - 1 && (ch = getchar()) != EOF && ch != '\n') {
 	if(ch == '\t'){
-	    spaces = TAB_STOP - (i % TAB_STOP);
+	    spaces = TAB_STOP - (i % TAB_STOP);nn
 	    for (int j = 0; j < spaces; j++) {
 		line[i] = ' ';
 		i++;
